@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  activeNav?: 'home' | 'shop' | 'about' | 'contact';
+}
+
+const {
+  title,
+  description = '木子里的小店 — 实用工具 / 数字商品 / 折腾过的副业成果',
+  activeNav,
+} = Astro.props;
+
+const siteTitle = '木子里的小店';
+const fullTitle = title === siteTitle ? title : `${title} · ${siteTitle}`;
+
+const navItems = [
+  { key: 'home', label: '首页', href: '/' },
+  { key: 'shop', label: '商品', href: '/projects/' },
+  { key: 'contact', label: '联系', href: '/#contact' },
+] as const;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{fullTitle}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-header__brand">木子里的小店</a>
+        <nav class="site-nav" aria-label="主导航">
+          {
+            navItems.map((item) => (
+              <a
+                href={item.href}
+                class={activeNav === item.key ? 'is-active' : ''}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div>© {new Date().getFullYear()} 木子里的小店</div>
+        <div>
+          联系：<a href="mailto:879026089@qq.com">879026089@qq.com</a>
+          <span style="margin: 0 0.5em; color: var(--color-border-strong)">·</span>
+          QQ：879026089
+          <span style="margin: 0 0.5em; color: var(--color-border-strong)">·</span>
+          电话：<a href="tel:19212711322">19212711322</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  nav.site ul a.active { color: var(--color-accent); }
+</style>

@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+type Props = { entry: CollectionEntry<'projects'> };
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { title, description, icon, tags } = entry.data;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="section" style="padding-top: var(--sp-16);">
+    <div class="container">
+      <p style="margin-bottom: var(--sp-6);">
+        <a href="/projects/" class="muted small">← 所有商品</a>
+      </p>
+      <div class="detail-hero">
+        <h1 class="detail-hero__h1">{icon} {title}</h1>
+        <p class="detail-hero__desc">{description}</p>
+        {tags.length > 0 && (
+          <div style="margin-top: var(--sp-4);">
+            {tags.map((t) => <span class="badge">{t}</span>)}
+          </div>
+        )}
+      </div>
+      <hr />
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

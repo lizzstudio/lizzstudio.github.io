@@ -1,0 +1,169 @@
+---
+/**
+ * 首页 — 木子里的小店
+ * Hero / 商品列表 / 联系方式
+ * 不展示个人履历/公司/学校
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const products = [
+  {
+    title: 'WPS Excel 翻译插件',
+    desc: 'WPS 内的选中文本即译插件，支持多模型多语言。已发布，授权即可用。',
+    status: '在售',
+    price: '¥19',
+    tags: ['WPS', '插件', 'AI'],
+    href: '/projects/wps-translate/',
+    gallery: [
+      '/images/projects/wps-translate.png',
+      '/images/projects/wps-translate-sell.png',
+      '/images/projects/wps-translate-demo.png',
+      '/images/projects/wps-translate-guarantee.png',
+    ],
+  },
+  {
+    title: 'WPS Word 翻译插件',
+    desc: 'Word 内选中即译，弹窗显示译文不打断阅读。Excel 版可并存。',
+    status: '在售',
+    price: '¥19',
+    tags: ['WPS', '插件', 'AI'],
+    href: '/projects/wps-word-translate/',
+    gallery: [
+      '/images/projects/wps-word-translate.png',
+      '/images/projects/wps-word-translate-sell.png',
+      '/images/projects/wps-word-translate-demo.png',
+      '/images/projects/wps-word-translate-guarantee.png',
+    ],
+  },
+  {
+    title: 'WPS PDF 翻译插件',
+    desc: 'PDF 内选中即译，还带扫描件 OCR。读外文 PDF / 扫描版合同不再难。',
+    status: '在售',
+    price: '¥19',
+    tags: ['WPS', '插件', 'OCR'],
+    href: '/projects/wps-pdf-translate/',
+    gallery: [
+      '/images/projects/wps-pdf-translate.png',
+      '/images/projects/wps-pdf-translate-sell.png',
+      '/images/projects/wps-pdf-translate-demo.png',
+      '/images/projects/wps-pdf-translate-guarantee.png',
+    ],
+  },
+  {
+    title: '招投标信息采集平台',
+    desc: '7 大招投标网站自动采集，已稳定运行 22+ 天，可镜像部署。',
+    status: '在售',
+    price: '¥39/月',
+    tags: ['数据采集'],
+    href: '/projects/zhaobiao-monitor/',
+    gallery: ['/images/projects/zhaobiao-monitor.png'],
+  },
+] as const;
+---
+
+<BaseLayout
+  title="木子里的小店"
+  description="木子里的小店 — 实用工具与数字商品。WPS 插件 / Excel 工具 / 数据采集。"
+  activeNav="home"
+>
+  <section class="hero">
+    <div class="container container--wide">
+      <span class="hero__tag">实用工具 · 数字商品</span>
+      <h1 class="hero__title">
+        把折腾过、跑通过的东西，<br />
+        打包成<span class="accent">可用</span>的商品。
+      </h1>
+      <p class="hero__subtitle">
+        解决过真问题的小工具，看得上的话带回家用，不满意随时说。
+      </p>
+      <div class="hero__cta">
+        <a href="/projects/" class="btn btn--primary">逛逛商品</a>
+        <a href="/#contact" class="btn btn--ghost">联系店主</a>
+      </div>
+      <p class="hero__meta">QQ 879026089 · 879026089@qq.com · 电话 19212711322</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--wide">
+      <div class="section-head">
+        <h2 class="section-head__title">店里在售</h2>
+        <a href="/projects/" class="section-head__link">全部商品 →</a>
+      </div>
+      <div class="grid grid--3">
+        {
+          products.map((p) => (
+            <article class="card">
+              <div class="card__gallery-wrap">
+                {p.gallery.length > 1 && (
+                  <button class="gallery-btn gallery-btn--prev" aria-label="上一张">‹</button>
+                )}
+                <div class="card__gallery">
+                  {p.gallery.map((g) => (
+                    <img class="card__cover" src={g} alt={p.title} />
+                  ))}
+                </div>
+                {p.gallery.length > 1 && (
+                  <button class="gallery-btn gallery-btn--next" aria-label="下一张">›</button>
+                )}
+              </div>
+              <div class="card__body">
+                <div class="card__meta">
+                  <span class="badge badge--accent">{p.status}</span>
+                  <span class="badge badge--price">{p.price}</span>
+                  <span class="badge-group">
+                    {p.tags.map((t) => <span class="badge">{t}</span>)}
+                  </span>
+                </div>
+                <h3 class="card__title">
+                  <a href={p.href} class="card__title-link">{p.title}</a>
+                </h3>
+                <p class="card__desc">{p.desc}</p>
+                <div>
+                  <a href={p.href} class="btn btn--ghost btn--sm">查看详情</a>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section" style="background: var(--color-bg-soft); border-block: 1px solid var(--color-border);">
+    <div class="container">
+      <h2>联系店主</h2>
+      <p class="muted" style="margin-top: var(--sp-4); max-width: 640px;">
+        购买咨询 / 试用申请 / 定制合作，都欢迎联系。回复不一定快，但都会回。
+      </p>
+      <dl class="contact-list" style="margin-top: var(--sp-6);">
+        <div>
+          <dt>QQ</dt>
+          <dd>879026089（加好友请备注来意）</dd>
+        </div>
+        <div>
+          <dt>邮箱</dt>
+          <dd><a href="mailto:879026089@qq.com">879026089@qq.com</a></dd>
+        </div>
+        <div>
+          <dt>电话</dt>
+          <dd><a href="tel:19212711322">19212711322</a></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('.card__gallery').forEach((g) => {
+    const wrap = g.closest('.card__gallery-wrap');
+    if (!wrap) return;
+    const step = () => g.clientWidth;
+    wrap.querySelector('.gallery-btn--prev')?.addEventListener('click', () => {
+      g.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    wrap.querySelector('.gallery-btn--next')?.addEventListener('click', () => {
+      g.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+  });
+</script>
